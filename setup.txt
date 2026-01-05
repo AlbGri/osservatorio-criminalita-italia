@@ -1,0 +1,51 @@
+** Config Git esistente **
+```bash
+git config --global user.name
+git config --global user.email
+git config --list
+```
+
+** Diagnostica Python (miniconda) **
+```bash
+"C:\ProgramData\miniconda3\Scripts\activate.bat"
+python --version
+pip --version
+conda --version
+conda env list
+```
+
+** Preferences: Open User Settings (JSON) **
+Modifico per attivare l'environment in automatico (miniconda C:\\ProgramData\\miniconda3\\Scripts\\activate.bat).
+
+** User Settings locale **
+mkdir .vscode
+.vscode\settings.json
+
+
+** Environment Conda:**
+```bash
+conda create -n osservatorio python=3.11 -y
+conda activate osservatorio
+```
+
+** Git locale **
+```bash
+conda activate osservatorio
+git init
+git config --local user.name "AlbGri"
+git config --local user.email "alberto.grippaldi@gmail.com"
+```
+
+** Creazione cartelle di lavoro **
+mkdir data docs src tests .github
+mkdir data\raw data\processed data\metadata
+mkdir src\data_acquisition src\data_cleaning src\visualizations
+mkdir .github\workflows
+
+** Readme **
+File>Readme.MD
+
+** Primo commit **
+git add .
+git commit -m "Primo commit: struttura base progetto"
+git status

@@ -1,0 +1,8 @@
+{
+    "python.defaultInterpreterPath": "C:\\ProgramData\\miniconda3\\envs\\osservatorio\\python.exe",
+    "python.terminal.activateEnvironment": true,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    }
+}
