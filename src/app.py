@@ -24,52 +24,70 @@ Questo è un progetto di visualizzazione dati sulla criminalità in Italia
 basato su fonti ufficiali (ISTAT, Ministero dell'Interno).
 """)
 
-# Sezione 2: Trend Delitti con Dati Reali ISTAT
+# Sezione 2: Trend Delitti con Dati Normalizzati
 st.header("Trend Delitti Denunciati in Italia (2014-2023)")
 
-# Carica dati puliti
-df_totale = pd.read_csv('data/processed/delitti_totale_italia_2014_2023.csv')
+# Box giallo avviso limiti dati
+st.warning("""
+**Nota metodologica importante:**  
+Questi dati mostrano **denunce registrate**, non crimini effettivamente commessi. 
+Alcuni reati hanno bassa propensione alla denuncia (es. violenze domestiche), 
+altri alta (es. furti auto assicurati). Il grafico riflette sia la criminalità reale 
+che la propensione a denunciare e l'efficienza delle forze dell'ordine.
+""")
+
+# Carica dati normalizzati
+df_normalizzato = pd.read_csv('data/processed/delitti_italia_normalizzato_2014_2023.csv')
 
 # Mostro dataframe
 with st.expander("Vedi dati"):
-    st.dataframe(df_totale)
+    st.dataframe(df_normalizzato)
 
 # LINE CHART con Plotly Graph Objects
 fig_line = go.Figure()
 
+# Traccia principale: tasso normalizzato
 fig_line.add_trace(go.Scatter(
-    x=df_totale['Anno'],
-    y=df_totale['Delitti'],
+    x=df_normalizzato['Anno'],
+    y=df_normalizzato['Tasso_per_1000'],
     mode='lines+markers',
-    name='Delitti denunciati',
+    name='Tasso delitti per 1000 abitanti',
     line=dict(color='#2E86AB', width=3),
-    marker=dict(size=8)
+    marker=dict(size=10)
 ))
+
+# Evidenziare periodo COVID (2020-2021) con area ombreggiata
+fig_line.add_vrect(
+    x0=2019.5, x1=2021.5,
+    fillcolor='rgba(255, 0, 0, 0.1)',
+    layer='below',
+    line_width=0,
+    annotation_text='Periodo COVID-19',
+    annotation_position='top left',
+    annotation=dict(font_size=10, font_color='red')
+)
 
 # Layout customizzato
 fig_line.update_layout(
-    title='Trend Delitti Denunciati in Italia (2014-2023)',
+    title='Tasso Delitti Denunciati per 1000 Abitanti - Italia (2014-2023)',
     xaxis_title='Anno',
-    yaxis_title='Numero Delitti Denunciati',
+    yaxis_title='Delitti per 1000 Abitanti',
     hovermode='x unified',
     template='plotly_white',
-    height=500
+    height=550
 )
-
-# Formattazione asse y con separatore migliaia
-fig_line.update_yaxes(tickformat=',')
 
 st.plotly_chart(fig_line, use_container_width=True)
 
 # Statistiche chiave
 col1, col2, col3 = st.columns(3)
 with col1:
-    variazione = ((df_totale.iloc[-1]['Delitti'] - df_totale.iloc[0]['Delitti']) / df_totale.iloc[0]['Delitti']) * 100
-    st.metric("Variazione 2014-2023", f"{variazione:.2f}%")
+    variazione = ((df_normalizzato.iloc[-1]['Tasso_per_1000'] - df_normalizzato.iloc[0]['Tasso_per_1000']) / df_normalizzato.iloc[0]['Tasso_per_1000']) * 100
+    st.metric("Variazione tasso 2014-2023", f"{variazione:.2f}%")
 with col2:
-    st.metric("Anno minimo", f"{df_totale.iloc[df_totale['Delitti'].idxmin()]['Anno']:.0f}")
+    st.metric("Anno minimo", f"{df_normalizzato.iloc[df_normalizzato['Tasso_per_1000'].idxmin()]['Anno']:.0f}")
 with col3:
-    st.metric("Anno massimo", f"{df_totale.iloc[df_totale['Delitti'].idxmax()]['Anno']:.0f}")
+    st.metric("Anno massimo", f"{df_normalizzato.iloc[df_normalizzato['Tasso_per_1000'].idxmax()]['Anno']:.0f}")
 
 st.divider()
 
