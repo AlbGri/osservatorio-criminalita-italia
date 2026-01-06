@@ -1,7 +1,7 @@
 # Stato Progetto - Ultimo aggiornamento: 2026-01-06
 
 ## Fase Corrente
-**Fase 1: MVP Dashboard Base - Inizio**
+**Fase 1: MVP Dashboard Base - Grafico 1 completato**
 
 ## Completato
 
@@ -21,22 +21,30 @@
 - [x] Integrazione dati reali in app Streamlit
 - [x] App funzionante con grafico trend nazionale 2014-2023
 - [x] Dataset pulito salvato in data/processed/
-- [x] Rimozione file privati da GitHub (PROMPT.md, roadmap.md, SETUP_WINDOWS.md)
+- [x] Rimozione file privati da GitHub
 - [x] Deploy Streamlit Cloud (criminalita-italia.streamlit.app)
 - [x] Documentazione methodology.md (380 parole)
 - [x] Decisione GO/NO-GO: GO Fase 1
 
-## In corso
+### Fase 1: MVP Dashboard Base (IN CORSO)
+- [x] Grafico 1: Trend nazionale normalizzato
+  - [x] Download dati popolazione ISTAT (ricostruzione 2002-2019 + POSAS 2020-2023)
+  - [x] Integrazione popolazione nel notebook
+  - [x] Calcolo tasso per 1000 abitanti
+  - [x] Dataset normalizzato salvato
+  - [x] Aggiornamento app.py con tasso normalizzato
+  - [x] Box giallo warning limiti dati
+  - [x] Evidenziazione periodo COVID 2020-2021
+  - [x] Deploy online aggiornato
 
-### Fase 1: MVP Dashboard Base
-- [ ] Grafico 1: Migliorare trend con normalizzazione popolazione
-- [ ] Download dati popolazione ISTAT 2014-2023
+## In corso
+- [ ] Grafico 2: Percezione vs Dati (non iniziato)
+- [ ] Grafico 3: Tipologie reato nel tempo (non iniziato)
 
 ## Prossimi step
-- Acquisizione dati popolazione ISTAT
-- Calcolo tasso delitti per 1000 abitanti
-- Box giallo avviso limiti dati
-- Evidenziare periodo COVID nel grafico
+- Acquisizione dati percezione sicurezza ISTAT
+- Implementazione Grafico 2 (dual-axis)
+- Implementazione Grafico 3 (breakdown tipologie)
 
 ## Problemi aperti
 Nessuno
@@ -46,30 +54,31 @@ Nessuno
 - Librerie: streamlit 1.41.1, plotly 5.24.1, pandas 2.2.3, numpy 2.2.1, jupyter 1.1.1
 - Repository: https://github.com/AlbGri/osservatorio-criminalita-italia
 - Deploy: https://criminalita-italia.streamlit.app
-- Dataset: delitti_2014_2023_istat.csv (18MB, 74.236 righe)
-- Dataset pulito: delitti_totale_italia_2014_2023.csv (10 righe, 2014-2023)
+- Dataset delitti: delitti_2014_2023_istat.csv (18MB, 74.236 righe)
+- Dataset popolazione: ricostruzione 2002-2019 + POSAS 2020-2023
+- Dataset processati:
+  - delitti_totale_italia_2014_2023.csv (10 righe)
+  - delitti_italia_normalizzato_2014_2023.csv (10 righe, include tasso per 1000 abitanti)
 
 ## Ore dedicate
 Giorno 1 (2026-01-05): ~2.5 ore (setup iniziale)
-Giorno 2 (2026-01-06): ~6 ore (Settimana 1-3 roadmap, deploy, methodology)
+Giorno 2 (2026-01-06): ~10 ore (Fase 0 completa + Grafico 1 Fase 1)
 
-**Totale Fase 0: ~8.5 ore su 30 previste (72% sotto stima)**
+**Totale progetto: ~12.5 ore**
+- Fase 0: ~8.5 ore (30 previste)
+- Fase 1 parziale: ~4 ore
 
-## Retrospettiva stime Fase 0
-**Roadmap vs Realtà:**
-- Settimana 1 prevista: 10 ore → Reale: ~2 ore
-- Settimana 2 prevista: 10 ore → Reale: ~2 ore  
-- Settimana 3 prevista: 10 ore → Reale: ~4.5 ore
-- **Totale Fase 0: 30 ore previste vs 8.5 ore reali**
+## Retrospettiva stime
+**Fase 0:**
+- Previste: 30 ore
+- Reali: 8.5 ore
+- Differenza: -72%
 
-**Fattori velocità:**
-- Curve apprendimento Streamlit/Plotly più rapide
-- Dati ISTAT facilmente accessibili
-- Competenze pregresse pandas/python
-- Setup tecnico senza intoppi
+**Fase 1 (parziale - solo Grafico 1):**
+- Roadmap non aveva stima per singolo grafico
+- Grafico 1 completato in ~4 ore (include acquisizione dati popolazione, normalizzazione, implementazione)
 
-**Conclusione Fase 0:**
-Validazione fattibilità superata con successo. App funzionante online con dati reali. Proseguimento con Fase 1 approvato.
-
-**Azione per Fase 1:**
-Monitorare velocità task Fase 1 prima di rivalutare stime complete. Approccio incrementale step-by-step.
+**Osservazioni:**
+- Velocità mantenuta anche in Fase 1
+- Acquisizione dati popolazione ISTAT più laboriosa del previsto (formati diversi, necessità concatenazione)
+- Normalizzazione per popolazione fondamentale per analisi corretta
