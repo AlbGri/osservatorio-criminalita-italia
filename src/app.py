@@ -91,6 +91,102 @@ with col3:
 
 st.divider()
 
+# Sezione Grafico 2: Percezione vs Dati Registrati
+st.header("Percezione della Sicurezza vs Criminalità Registrata (2014-2023)")
+
+# Box giallo avviso
+st.warning("""
+**Divario percezione-dati:**  
+La percezione di insicurezza non è "sbagliata" - risponde a fattori legittimi come 
+copertura mediatica, degrado urbano, sfiducia istituzionale ed esperienza personale.  
+Questi dati mostrano che percezione e criminalità registrata seguono dinamiche diverse.
+""")
+
+# Carica dati combinati
+df_percezione_vs_dati = pd.read_csv('data/processed/percezione_vs_dati_2014_2023.csv')
+
+# Mostra dati
+with st.expander("Vedi dati percezione vs criminalità"):
+    st.dataframe(df_percezione_vs_dati)
+
+# DUAL-AXIS CHART con Plotly
+fig_dual = go.Figure()
+
+# Serie 1: Percezione (asse Y sinistro)
+fig_dual.add_trace(go.Scatter(
+    x=df_percezione_vs_dati['Anno'],
+    y=df_percezione_vs_dati['Percezione_pct'],
+    mode='lines+markers',
+    name='Percezione insicurezza (%)',
+    line=dict(color='#E63946', width=3),
+    marker=dict(size=10),
+    yaxis='y'
+))
+
+# Serie 2: Tasso delitti (asse Y destro)
+fig_dual.add_trace(go.Scatter(
+    x=df_percezione_vs_dati['Anno'],
+    y=df_percezione_vs_dati['Tasso_per_1000'],
+    mode='lines+markers',
+    name='Tasso delitti per 1000 ab.',
+    line=dict(color='#2E86AB', width=3, dash='dash'),
+    marker=dict(size=10),
+    yaxis='y2'
+))
+
+# Evidenzia periodo COVID
+fig_dual.add_vrect(
+    x0=2019.5, x1=2021.5,
+    fillcolor='rgba(200, 200, 200, 0.2)',
+    layer='below',
+    line_width=0,
+    annotation_text='COVID-19',
+    annotation_position='top',
+    annotation=dict(font_size=9, font_color='gray')
+)
+
+# Layout dual-axis
+fig_dual.update_layout(
+    title='Gap tra Percezione di Insicurezza e Criminalità Registrata',
+    xaxis_title='Anno',
+    yaxis=dict(
+        title='% Famiglie percepiscono rischio criminalità',
+        titlefont=dict(color='#E63946'),
+        tickfont=dict(color='#E63946'),
+        side='left'
+    ),
+    yaxis2=dict(
+        title='Tasso delitti per 1000 abitanti',
+        titlefont=dict(color='#2E86AB'),
+        tickfont=dict(color='#2E86AB'),
+        overlaying='y',
+        side='right'
+    ),
+    hovermode='x unified',
+    template='plotly_white',
+    height=550,
+    legend=dict(x=0.5, y=1.15, xanchor='center', orientation='h')
+)
+
+st.plotly_chart(fig_dual, use_container_width=True)
+
+# Insight chiave
+col1, col2, col3 = st.columns(3)
+with col1:
+    var_percezione = df_percezione_vs_dati.iloc[-1]['Percezione_pct'] - df_percezione_vs_dati.iloc[0]['Percezione_pct']
+    st.metric("Δ Percezione 2014-2023", f"{var_percezione:.1f} punti %")
+with col2:
+    var_tasso = df_percezione_vs_dati.iloc[-1]['Tasso_per_1000'] - df_percezione_vs_dati.iloc[0]['Tasso_per_1000']
+    st.metric("Δ Tasso criminalità", f"{var_tasso:.1f} per 1000 ab.")
+with col3:
+    anno_max_gap = df_percezione_vs_dati.loc[
+        (df_percezione_vs_dati['Percezione_pct'] - 
+         df_percezione_vs_dati['Tasso_per_1000']).idxmax()
+    ]['Anno']
+    st.metric("Anno gap massimo", f"{anno_max_gap:.0f}")
+
+st.divider()
+
 # Sezione 3: Tutorial Plotly - Bar Chart (manteniamo con dati dummy per esempio)
 st.header("Confronto Tipologie Delitti (Dati Dummy)")
 
