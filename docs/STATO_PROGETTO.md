@@ -1,7 +1,7 @@
-# Stato Progetto - Ultimo aggiornamento: 2026-01-06
+# Stato Progetto - Ultimo aggiornamento: 2026-01-08
 
 ## Fase Corrente
-**Fase 1: MVP Dashboard Base - Grafico 1 completato**
+**Fase 1: MVP Dashboard Base - Grafico 2 completato**
 
 ## Completato
 
@@ -37,14 +37,26 @@
   - [x] Evidenziazione periodo COVID 2020-2021
   - [x] Deploy online aggiornato
 
+- [x] Grafico 2: Percezione vs Dati
+  - [x] Esplorazione portale ISTAT per dati percezione
+  - [x] Download CSV "Altri problemi" (percezione rischio criminalità 2014-2023)
+  - [x] Pulizia dati percezione in notebook
+  - [x] Merge percezione + delitti normalizzati
+  - [x] Dataset combinato salvato (percezione_vs_dati_2014_2023.csv)
+  - [x] Implementazione dual-axis chart in app.py
+  - [x] Box giallo avviso divario percezione-dati
+  - [x] Evidenziazione periodo COVID
+  - [x] Metriche chiave (delta percezione, delta tasso, anno gap massimo)
+  - [x] Deploy online aggiornato
+
 ## In corso
-- [ ] Grafico 2: Percezione vs Dati (non iniziato)
 - [ ] Grafico 3: Tipologie reato nel tempo (non iniziato)
 
 ## Prossimi step
-- Acquisizione dati percezione sicurezza ISTAT
-- Implementazione Grafico 2 (dual-axis)
-- Implementazione Grafico 3 (breakdown tipologie)
+- Implementazione Grafico 3 (breakdown tipologie: stacked area chart o small multiples)
+- Acquisizione dati breakdown per categoria reato (furti, rapine, truffe, violenze, droga)
+- Normalizzazione per popolazione per categoria
+- Eventuale annotazione cambiamenti normativi rilevanti
 
 ## Problemi aperti
 Nessuno
@@ -54,19 +66,23 @@ Nessuno
 - Librerie: streamlit 1.41.1, plotly 5.24.1, pandas 2.2.3, numpy 2.2.1, jupyter 1.1.1
 - Repository: https://github.com/AlbGri/osservatorio-criminalita-italia
 - Deploy: https://criminalita-italia.streamlit.app
-- Dataset delitti: delitti_2014_2023_istat.csv (18MB, 74.236 righe)
-- Dataset popolazione: ricostruzione 2002-2019 + POSAS 2020-2023
+- Dataset raw:
+  - delitti_2014_2023_istat.csv (18MB, 74.236 righe)
+  - percezione_criminalita_2014_2023_istat.csv (10 righe)
+  - popolazione ISTAT: ricostruzione 2002-2019 + POSAS 2020-2023
 - Dataset processati:
   - delitti_totale_italia_2014_2023.csv (10 righe)
   - delitti_italia_normalizzato_2014_2023.csv (10 righe, include tasso per 1000 abitanti)
+  - percezione_vs_dati_2014_2023.csv (10 righe, include percezione + tasso + popolazione)
 
 ## Ore dedicate
 Giorno 1 (2026-01-05): ~2.5 ore (setup iniziale)
 Giorno 2 (2026-01-06): ~10 ore (Fase 0 completa + Grafico 1 Fase 1)
+Giorno 3 (2026-01-08): ~4 ore (Grafico 2 completo: acquisizione dati, processing, implementazione, deploy, fix gitignore)
 
-**Totale progetto: ~12.5 ore**
+**Totale progetto: ~16.5 ore**
 - Fase 0: ~8.5 ore (30 previste)
-- Fase 1 parziale: ~4 ore
+- Fase 1 parziale: ~8 ore (Grafico 1 + Grafico 2)
 
 ## Retrospettiva stime
 **Fase 0:**
@@ -74,11 +90,21 @@ Giorno 2 (2026-01-06): ~10 ore (Fase 0 completa + Grafico 1 Fase 1)
 - Reali: 8.5 ore
 - Differenza: -72%
 
-**Fase 1 (parziale - solo Grafico 1):**
+**Fase 1 (parziale - Grafico 1 + Grafico 2):**
 - Roadmap non aveva stima per singolo grafico
-- Grafico 1 completato in ~4 ore (include acquisizione dati popolazione, normalizzazione, implementazione)
+- Grafico 1 completato in ~4 ore (acquisizione popolazione, normalizzazione, implementazione)
+- Grafico 2 completato in ~4 ore (acquisizione percezione, merge dataset, dual-axis chart)
 
 **Osservazioni:**
-- Velocità mantenuta anche in Fase 1
-- Acquisizione dati popolazione ISTAT più laboriosa del previsto (formati diversi, necessità concatenazione)
-- Normalizzazione per popolazione fondamentale per analisi corretta
+- Velocità mantenuta costante (~4 ore per grafico completo)
+- Pattern ripetibile: download dati → pulizia notebook → merge → implementazione → deploy
+- ISTAT data discovery più veloce dopo esperienza Grafico 1
+- Dual-axis chart più complesso di line chart singolo ma documentazione Plotly chiara
+- Fix gitignore e troubleshooting deploy: ~30 minuti extra
+
+## Blocchi risolti
+**Streamlit Cloud non aggiorna dopo push:**
+- Causa: nuovi file CSV richiedono ricostruzione ambiente
+- Soluzione: usare "Reboot" invece di "Rerun" dalle settings app
+- Tempo perso: ~15 minuti
+- Lesson learned: Reboot per nuovi file, Rerun per solo codice
