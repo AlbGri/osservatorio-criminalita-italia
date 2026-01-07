@@ -2,5 +2,5 @@
 docs/PROMPT.md 
 docs/SETUP_WINDOWS.md 
 docs/roadmap.md 
-.ipynb_checkpoints/ 
+notebooks/.ipynb_checkpoints/ 
 data/raw/popolazione/ 
