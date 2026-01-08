@@ -12,7 +12,7 @@ st.set_page_config(
 
 # Header
 st.title("Osservatorio Criminalità Italia")
-st.subheader("Dashboard interattiva - Fase 0 MVP")
+st.subheader("Dashboard MVP")
 
 # Divider
 st.divider()
@@ -187,42 +187,166 @@ with col3:
 
 st.divider()
 
-# Sezione 3: Tutorial Plotly - Bar Chart (manteniamo con dati dummy per esempio)
-st.header("Confronto Tipologie Delitti (Dati Dummy)")
+# Sezione Grafico 3: Tipologie Reato nel Tempo
+st.header("Evoluzione Tipologie di Reato (2014-2023)")
 
-# Dati dummy per bar chart
-tipologie = ['Furti', 'Rapine', 'Truffe', 'Lesioni', 'Danneggiamenti']
-valori = np.random.randint(100000, 800000, size=len(tipologie))
+# Box giallo avviso
+st.warning("""
+**Dinamiche diverse per tipologia:**  
+Aumenti in specifiche categorie (es. truffe online) possono riflettere cambiamenti sociali 
+e tecnologici senza indicare più criminalità complessiva. Le categorie riflettono 
+classificazioni penali, non la percezione comune del reato.
+""")
 
-df_bar = pd.DataFrame({
-    'Tipologia': tipologie,
-    'Casi': valori
-})
+# Layout a 2 colonne
+col_left, col_right = st.columns(2)
 
-# BAR CHART con Plotly Express (più veloce per grafici semplici)
-fig_bar = px.bar(
-    df_bar,
-    x='Tipologia',
-    y='Casi',
-    title='Delitti per Tipologia - Anno 2024',
-    color='Casi',
-    color_continuous_scale='Blues'
-)
+# --- COLONNA SINISTRA: Tutte le categorie ---
+with col_left:
+    st.subheader("Quadro Generale per Categoria")
+    
+    # Carica dati categorie
+    df_categorie_norm = pd.read_csv('data/processed/delitti_categorie_normalizzato_2014_2023.csv')
+    
+    with st.expander("Vedi dati categorie"):
+        st.dataframe(df_categorie_norm, height=200)
+    
+    # LINE CHART categorie
+    fig_categorie = go.Figure()
+    
+    categorie_list = df_categorie_norm['Categoria'].unique()
+    colori = {
+        'Furti': '#2E86AB',
+        'Violenze contro la persona': '#E63946', 
+        'Truffe e Frodi': '#F77F00',
+        'Rapine': '#9B2226',
+        'Droga': '#8338EC',
+        'Altro': '#95A99C'
+    }
+    
+    for categoria in categorie_list:
+        df_cat = df_categorie_norm[df_categorie_norm['Categoria'] == categoria]
+        fig_categorie.add_trace(go.Scatter(
+            x=df_cat['Anno'],
+            y=df_cat['Tasso_per_1000'],
+            mode='lines+markers',
+            name=categoria,
+            line=dict(width=2.5, color=colori.get(categoria, '#999999')),
+            marker=dict(size=6)
+        ))
+    
+    # Evidenzia periodo COVID
+    fig_categorie.add_vrect(
+        x0=2019.5, x1=2021.5,
+        fillcolor='rgba(200, 200, 200, 0.2)',
+        layer='below',
+        line_width=0,
+        annotation_text='COVID-19',
+        annotation_position='top',
+        annotation=dict(font_size=9, font_color='gray')
+    )
+    
+    fig_categorie.update_layout(
+        title='Tasso per 1000 abitanti',
+        xaxis_title='Anno',
+        yaxis_title='Tasso per 1000 ab.',
+        hovermode='x unified',
+        template='plotly_white',
+        height=500,
+        legend=dict(x=0, y=-0.2, xanchor='left', orientation='h'),
+        margin=dict(l=20, r=20, t=40, b=80)
+    )
+    
+    st.plotly_chart(fig_categorie, use_container_width=True)
+    
+    # Metriche categorie
+    st.caption("**Variazioni 2014-2023**")
+    furti_2014 = df_categorie_norm[(df_categorie_norm['Anno']==2014) & (df_categorie_norm['Categoria']=='Furti')]['Tasso_per_1000'].values[0]
+    furti_2023 = df_categorie_norm[(df_categorie_norm['Anno']==2023) & (df_categorie_norm['Categoria']=='Furti')]['Tasso_per_1000'].values[0]
+    var_furti = ((furti_2023 - furti_2014) / furti_2014) * 100
+    
+    truffe_2014 = df_categorie_norm[(df_categorie_norm['Anno']==2014) & (df_categorie_norm['Categoria']=='Truffe e Frodi')]['Tasso_per_1000'].values[0]
+    truffe_2023 = df_categorie_norm[(df_categorie_norm['Anno']==2023) & (df_categorie_norm['Categoria']=='Truffe e Frodi')]['Tasso_per_1000'].values[0]
+    var_truffe = ((truffe_2023 - truffe_2014) / truffe_2014) * 100
+    
+    st.markdown(f"Furti: {var_furti:.1f}% | Truffe: {var_truffe:.1f}%")
 
-# Customizzazioni layout
-fig_bar.update_layout(
-    xaxis_title='Tipologia Delitto',
-    yaxis_title='Numero Casi',
-    template='plotly_white',
-    height=500,
-    showlegend=False
-)
+# --- COLONNA DESTRA: Reati alto allarme sociale ---
+with col_right:
+    st.subheader("Reati ad Alto Impatto Mediatico")
+    
+    st.info("""
+    **Focus su reati rari ma ad alto allarme sociale.**  
+    Rappresentano <2% dei delitti totali ma dominano percezione pubblica e copertura mediatica.
+    """)
+    
+    # Carica dati allarme
+    df_allarme_norm = pd.read_csv('data/processed/reati_allarme_sociale_2014_2023.csv')
+    
+    with st.expander("Vedi dati reati allarme"):
+        st.dataframe(df_allarme_norm, height=200)
+    
+    # LINE CHART reati allarme
+    fig_allarme = go.Figure()
+    
+    reati_list = df_allarme_norm['Reato'].unique()
+    colori_allarme = {
+        'Omicidi volontari consumati': '#DC143C',
+        'Tentati omicidi': '#FF6347',
+        'Violenze sessuali': '#8B008B',
+        'Atti sessuali con minorenne': '#9932CC',
+        'Rapine in abitazione': '#FF8C00',
+        'Sequestri di persona': '#CD853F'
+    }
+    
+    for reato in reati_list:
+        df_reato = df_allarme_norm[df_allarme_norm['Reato'] == reato]
+        fig_allarme.add_trace(go.Scatter(
+            x=df_reato['Anno'],
+            y=df_reato['Tasso_per_100k'],
+            mode='lines+markers',
+            name=reato,
+            line=dict(width=2.5, color=colori_allarme.get(reato, '#999999')),
+            marker=dict(size=6)
+        ))
+    
+    # Evidenzia periodo COVID
+    fig_allarme.add_vrect(
+        x0=2019.5, x1=2021.5,
+        fillcolor='rgba(200, 200, 200, 0.2)',
+        layer='below',
+        line_width=0,
+        annotation_text='COVID-19',
+        annotation_position='top',
+        annotation=dict(font_size=9, font_color='gray')
+    )
+    
+    fig_allarme.update_layout(
+        title='Tasso per 100k abitanti',
+        xaxis_title='Anno',
+        yaxis_title='Tasso per 100k ab.',
+        hovermode='x unified',
+        template='plotly_white',
+        height=500,
+        legend=dict(x=0, y=-0.2, xanchor='left', orientation='h'),
+        margin=dict(l=20, r=20, t=40, b=80)
+    )
+    
+    st.plotly_chart(fig_allarme, use_container_width=True)
+    
+    # Metriche allarme
+    st.caption("**Variazioni 2014-2023**")
+    omicidi_2014 = df_allarme_norm[(df_allarme_norm['Anno']==2014) & (df_allarme_norm['Reato']=='Omicidi volontari consumati')]['Tasso_per_100k'].values[0]
+    omicidi_2023 = df_allarme_norm[(df_allarme_norm['Anno']==2023) & (df_allarme_norm['Reato']=='Omicidi volontari consumati')]['Tasso_per_100k'].values[0]
+    var_omicidi = ((omicidi_2023 - omicidi_2014) / omicidi_2014) * 100
+    
+    violenze_2014 = df_allarme_norm[(df_allarme_norm['Anno']==2014) & (df_allarme_norm['Reato']=='Violenze sessuali')]['Tasso_per_100k'].values[0]
+    violenze_2023 = df_allarme_norm[(df_allarme_norm['Anno']==2023) & (df_allarme_norm['Reato']=='Violenze sessuali')]['Tasso_per_100k'].values[0]
+    var_violenze = ((violenze_2023 - violenze_2014) / violenze_2014) * 100
+    
+    st.markdown(f"Omicidi: {var_omicidi:.1f}% | Violenze sessuali: {var_violenze:.1f}%")
 
-st.plotly_chart(fig_bar, use_container_width=True)
-
-# Nota tecnica
-st.info("I dati del secondo grafico sono casuali e servono solo per dimostrare le capacità di Plotly. Verranno sostituiti con dati reali nelle prossime fasi.")
+st.divider()
 
 # Footer
-st.divider()
-st.caption("Fase 0 - Settimana 1 | Repository: [GitHub](https://github.com/AlbGri/osservatorio-criminalita-italia)")
+st.caption("Fase 1 MVP Completata | Repository: [GitHub](https://github.com/AlbGri/osservatorio-criminalita-italia)")
