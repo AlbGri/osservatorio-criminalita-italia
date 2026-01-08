@@ -348,5 +348,20 @@ with col_right:
 
 st.divider()
 
+# Box critico limiti strutturali dati italiani
+st.warning("""
+⚠️ **Limite strutturale dei dati italiani**
+
+Questo progetto usa solo denunce perché l'Italia, a differenza di UK/USA/Germania, 
+non pubblica:
+- Indagini vittimizzazione annuali (UK: 35k famiglie/anno dal 1982)
+- Dati sanitari aggregati su violenze (già raccolti ma non pubblici)
+- Esiti processuali linkabili alle denunce
+
+**Non è limite tecnico: è scelta politica.**
+
+Dettagli completi in [Metodologia](https://github.com/AlbGri/osservatorio-criminalita-italia/blob/main/docs/methodology.md#limiti-strutturali-cosa-litalia-potrebbe-misurare-ma-non-fa)
+""")
+
 # Footer
 st.caption("Fase 1 MVP Completata | Repository: [GitHub](https://github.com/AlbGri/osservatorio-criminalita-italia)")

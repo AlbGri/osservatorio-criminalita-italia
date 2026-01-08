@@ -129,8 +129,123 @@ Il **divario tra percezione e dati registrati** è documentato e normale. La per
 
 Questi fattori sono legittimi e non rendono la percezione "sbagliata". Il progetto mira a visualizzare questa differenza senza giudizi di valore.
 
+## Limiti strutturali: cosa l'Italia potrebbe misurare ma non fa
+
+Questo progetto è limitato ai dati delle denunce non per scelta metodologica, ma perché l'Italia non pubblica dati che altri paesi rendono disponibili.
+
+### Cosa pubblicano UK, USA, Germania (e Italia no)
+
+**Regno Unito:**
+- Crime Survey for England and Wales (CSEW): indagine vittimizzazione annuale su ~35.000 famiglie
+- Dati pubblicati entro 6 mesi, disaggregati per tipologia e territorio
+- Stima numero oscuro per ogni categoria di reato
+
+**Stati Uniti:**
+- National Crime Victimization Survey (NCVS): ~160.000 persone intervistate annualmente dal 1973
+- Pubblicazione trimestrale, dati aperti e linkabili
+- Database FBI integrato con esiti processuali
+
+**Germania:**
+- Dunkelfeldforschung (ricerche numero oscuro) periodiche su scala nazionale
+- Dati sanitari aggregati su violenze (Polizeiliche Kriminalstatistik + dati ospedalieri)
+- Confronto diretto denunce vs vittimizzazioni
+
+### Cosa l'Italia non pubblica (ma potrebbe)
+
+1. **Indagini vittimizzazione annuali**
+   - ISTAT le fa ogni 5-7 anni (ultima 2015-2016)
+   - Campione più piccolo (~24.000 famiglie vs 35k UK)
+   - Non sempre pubblicati dati disaggregati per anno e territorio
+
+2. **Dati sanitari aggregati**
+   - Accessi Pronto Soccorso per violenze esistono ma NON sono pubblici
+   - Database decessi (ReNCaM) esiste con cause dettagliate
+   - Database violenze ospedaliere? No
+   - Motivazione ufficiale: privacy/GDPR
+   - Realtà: dati aggregati per regione/anno non violano privacy. È scelta politica.
+
+3. **Esiti processuali linkabili**
+   - Ministero Giustizia pubblica statistiche ma:
+     - Con 3-5 anni di ritardo
+     - Non linkabili a dataset ISTAT (chiavi diverse)
+     - Formato non standard, difficile analisi temporale
+
+4. **Database integrato Interno-Giustizia-Sanità**
+   - Tecnicamente possibile (abbiamo anagrafe tributaria, sanitaria unificata)
+   - Nessun progetto in corso per integrazione dati criminalità
+
+### Perché l'Italia non li pubblica
+
+**Non sono limiti tecnici.** L'Italia ha:
+- Database nazionale decessi con cause (ReNCaM)
+- Tessera sanitaria con accessi PS tracciati
+- Sistema informatico Ministero Interno per denunce
+- Sistema SICP Ministero Giustizia per processi
+
+**Sono scelte politiche:**
+
+1. **Accountability**: dati reali = governi valutabili su risultati
+   - Esempio: se ISTAT pubblicasse "500.000 violenze domestiche/anno" vs "6.000 denunce", pressione su servizi sociali, centri antiviolenza, fondi
+   - Più facile non misurare che dover agire
+
+2. **Inerzia burocratica**: ogni ministero protegge proprio territorio
+   - Interno: denunce
+   - Giustizia: processi
+   - Salute: PS
+   - Zero coordinamento, zero incentivi a condividere
+
+3. **Costo politico percepito**: nessun governo vuole titoli
+   - "Italia: 500k violenze/anno, solo 6k denunciate"
+   - "Numero oscuro criminalità 400% più alto di UK"
+   - Preferiscono parlare di "aumento denunce" (spin positivo: fiducia cittadini)
+
+4. **Assenza pressione pubblica**: cittadini/media non chiedono questi dati
+   - Campagne su sicurezza basate su percezione, non evidenze
+   - Dibattito politico su "emergenza criminalità" usa aneddoti, non statistiche comparative
+
+### Conseguenze dell'opacità
+
+- **Politiche inefficaci**: allocazione risorse su percezione (es. più polizia in centro) invece che su dati (es. violenze domestiche periferie)
+- **Dibattito distorto**: media/politici parlano di "aumento criminalità" citando denunce (dato quasi inutile per crimini con numero oscuro alto)
+- **Non comparabilità internazionale**: impossibile valutare performance Italia vs paesi trasparenti
+- **Mancanza accountability**: nessuno può misurare efficacia politiche sicurezza senza dati pre/post
+
+### Costi pubblicazione dati (risibili)
+
+UK CSEW: ~£10 milioni/anno (£0.15 per abitante)
+- Interviste, elaborazione, pubblicazione aperta
+- ROI: politiche basate su evidenze, non percezione
+
+Italia equivalente: ~€9 milioni/anno
+- 0.01% budget Ministero Interno (€11 miliardi)
+- Costo: 1 caffè/anno per cittadino
+
+**Non è problema di soldi. È problema di volontà politica.**
+
+### Cosa si potrebbe fare
+
+**Minimo (costo quasi zero):**
+1. ISTAT indagine vittimizzazione annuale (non ogni 5 anni)
+2. Pubblicare dati PS violenze aggregati per regione/anno (già raccolti)
+3. Ministero Giustizia: esiti denunce linkabili con dati ISTAT
+
+**Ottimale (costo 10-15 milioni/anno):**
+1. Database integrato Interno-Giustizia-Sanità
+2. Indagine vittimizzazione su campione UK-size (50k famiglie)
+3. Dashboard pubblico con confronti internazionali
+4. Audit annuale indipendente qualità dati
+
+**Confronto UK:**
+- 1973: inizia NCVS (USA)
+- 1982: inizia CSEW (UK)
+- 2024: Italia ancora dipendente solo da denunce
+
+**Ritardo: 40+ anni.**
+
 ## Trasparenza
 
 Questo progetto non afferma di mostrare "la criminalità in Italia", ma solo i dati ufficiali sulle denunce e sulla percezione, con piena consapevolezza dei limiti. L'obiettivo è facilitare la comprensione del divario tra percezione pubblica e dati registrati, non di dimostrare una tesi precostituita.
+
+**Questo progetto mostra cosa è possibile vedere con i dati disponibili. L'assenza di dati migliori non è limite statistico: è responsabilità istituzionale.**
 
 Tutti i dati raw, script di elaborazione e codice sorgente della dashboard sono disponibili pubblicamente su GitHub: https://github.com/AlbGri/osservatorio-criminalita-italia
