@@ -1,20 +1,31 @@
 # Osservatorio Criminalità Italia
 
-Dashboard interattiva per esplorare dati ufficiali sulla criminalità in Italia basati su fonti ISTAT.
-
-## Stato
-Fase 1: MVP Dashboard Base (in corso)
+Dashboard interattiva per esplorare dati ufficiali sulla criminalità in Italia con trasparenza metodologica e focus sul divario tra percezione e dati registrati.
 
 ## Demo
 https://criminalita-italia.streamlit.app
 
+## Stato
+**Fase 1 completata** - MVP Dashboard con 3 grafici interattivi:
+1. Trend delitti normalizzato per popolazione (2014-2023)
+2. Percezione sicurezza vs criminalità registrata
+3. Evoluzione tipologie reato (generale + focus reati mediatici)
+
 ## Stack
 - Python 3.11
-- Streamlit
-- Plotly
-- Pandas
+- Streamlit 1.41.1
+- Plotly 5.24.1
+- Pandas 2.2.3
 
-## Fase 0 completata
-- App funzionante con dati reali ISTAT 2014-2023
-- Deploy online
-- Documentazione metodologica
+## Dati
+Fonti ufficiali ISTAT:
+- Delitti denunciati 2014-2023
+- Percezione sicurezza famiglie (Multiscopo)
+- Popolazione residente
+
+## Documentazione
+- [Metodologia](docs/methodology.md) - limiti e trasparenza dati
+- [Stato Progetto](docs/STATO_PROGETTO.md) - avanzamento e retrospettiva
+
+## Licenza
+MIT
