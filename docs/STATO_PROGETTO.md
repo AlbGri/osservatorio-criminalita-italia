@@ -1,7 +1,7 @@
 # Stato Progetto - Ultimo aggiornamento: 2026-01-08
 
 ## Fase Corrente
-**Fase 1: MVP Dashboard Base - Grafico 2 completato**
+**Fase 1: MVP Dashboard Base - COMPLETATA ✓**
 
 ## Completato
 
@@ -26,7 +26,7 @@
 - [x] Documentazione methodology.md (380 parole)
 - [x] Decisione GO/NO-GO: GO Fase 1
 
-### Fase 1: MVP Dashboard Base (IN CORSO)
+### Fase 1: MVP Dashboard Base (COMPLETATA ✓)
 - [x] Grafico 1: Trend nazionale normalizzato
   - [x] Download dati popolazione ISTAT (ricostruzione 2002-2019 + POSAS 2020-2023)
   - [x] Integrazione popolazione nel notebook
@@ -49,14 +49,33 @@
   - [x] Metriche chiave (delta percezione, delta tasso, anno gap massimo)
   - [x] Deploy online aggiornato
 
-## In corso
-- [ ] Grafico 3: Tipologie reato nel tempo (non iniziato)
+- [x] Grafico 3: Tipologie reato nel tempo
+  - [x] Esplorazione 56 tipologie dettaglio dataset ISTAT
+  - [x] Definizione schema aggregazione (6 macro-categorie)
+  - [x] Implementazione categorizzazione automatica
+  - [x] Aggregazione per anno e categoria
+  - [x] Normalizzazione per popolazione
+  - [x] Dataset categorie salvato (delitti_categorie_normalizzato_2014_2023.csv)
+  - [x] Identificazione reati "alto allarme sociale" (6 tipologie dettaglio)
+  - [x] Dataset reati allarme salvato (reati_allarme_sociale_2014_2023.csv)
+  - [x] Layout a 2 colonne (generale + focus mediatico)
+  - [x] Implementazione grafici con colori distinti per categoria
+  - [x] Box info reati rari ma alto impatto
+  - [x] Metriche variazioni furti/truffe e omicidi/violenze sessuali
+  - [x] Pulizia layout (rimozione emoji, header aggiornato, footer unico)
+  - [x] Deploy online aggiornato
 
 ## Prossimi step
-- Implementazione Grafico 3 (breakdown tipologie: stacked area chart o small multiples)
-- Acquisizione dati breakdown per categoria reato (furti, rapine, truffe, violenze, droga)
-- Normalizzazione per popolazione per categoria
-- Eventuale annotazione cambiamenti normativi rilevanti
+**Fase 2: Dashboard Avanzata** (opzionale, da decidere)
+- Visualizzazioni regionali con mappe interattive
+- Filtri dinamici per territorio e periodo
+- Confronti internazionali (Eurostat)
+- Sezione "Numero Oscuro" con infografiche
+
+**Prima di Fase 2:**
+- Aggiornamento methodology.md (sezione percezione + categorie reati)
+- Eventuale refactoring codice (modularizzazione)
+- Raccolta feedback utenti reali
 
 ## Problemi aperti
 Nessuno
@@ -67,44 +86,48 @@ Nessuno
 - Repository: https://github.com/AlbGri/osservatorio-criminalita-italia
 - Deploy: https://criminalita-italia.streamlit.app
 - Dataset raw:
-  - delitti_2014_2023_istat.csv (18MB, 74.236 righe)
+  - delitti_2014_2023_istat.csv (18MB, 74.236 righe, 56 tipologie)
   - percezione_criminalita_2014_2023_istat.csv (10 righe)
   - popolazione ISTAT: ricostruzione 2002-2019 + POSAS 2020-2023
 - Dataset processati:
   - delitti_totale_italia_2014_2023.csv (10 righe)
-  - delitti_italia_normalizzato_2014_2023.csv (10 righe, include tasso per 1000 abitanti)
-  - percezione_vs_dati_2014_2023.csv (10 righe, include percezione + tasso + popolazione)
+  - delitti_italia_normalizzato_2014_2023.csv (10 righe, tasso per 1000 abitanti)
+  - percezione_vs_dati_2014_2023.csv (10 righe, percezione + tasso + popolazione)
+  - delitti_categorie_normalizzato_2014_2023.csv (60 righe, 6 categorie x 10 anni)
+  - reati_allarme_sociale_2014_2023.csv (60 righe, 6 reati x 10 anni, tasso per 100k)
 
 ## Ore dedicate
-Giorno 1 (2026-01-05): ~2.5 ore (setup iniziale)
-Giorno 2 (2026-01-06): ~10 ore (Fase 0 completa + Grafico 1 Fase 1)
-Giorno 3 (2026-01-08): ~4 ore (Grafico 2 completo: acquisizione dati, processing, implementazione, deploy, fix gitignore)
+Giorno 1 (2026-01-05): ~2.5 ore
+Giorno 2 (2026-01-06): ~10 ore
+Giorno 3 (2026-01-08): ~4 ore
+Giorno 4 (2026-01-08): ~6 ore
 
-**Totale progetto: ~16.5 ore**
-- Fase 0: ~8.5 ore (30 previste)
-- Fase 1 parziale: ~8 ore (Grafico 1 + Grafico 2)
+**Totale progetto: ~22.5 ore**
+- Fase 0: ~8.5 ore (30 previste, -72%)
+- Fase 1: ~14 ore (100-120 previste, -86%)
 
 ## Retrospettiva stime
-**Fase 0:**
-- Previste: 30 ore
-- Reali: 8.5 ore
-- Differenza: -72%
 
-**Fase 1 (parziale - Grafico 1 + Grafico 2):**
-- Roadmap non aveva stima per singolo grafico
-- Grafico 1 completato in ~4 ore (acquisizione popolazione, normalizzazione, implementazione)
-- Grafico 2 completato in ~4 ore (acquisizione percezione, merge dataset, dual-axis chart)
+**Fase 1 completata in 14 ore vs 100-120 previste**
+- Grafico 1: ~4 ore
+- Grafico 2: ~4 ore  
+- Grafico 3: ~6 ore
 
-**Osservazioni:**
-- Velocità mantenuta costante (~4 ore per grafico completo)
-- Pattern ripetibile: download dati → pulizia notebook → merge → implementazione → deploy
-- ISTAT data discovery più veloce dopo esperienza Grafico 1
-- Dual-axis chart più complesso di line chart singolo ma documentazione Plotly chiara
-- Fix gitignore e troubleshooting deploy: ~30 minuti extra
+**Velocità mantenuta:** ~4-6 ore per grafico completo end-to-end
 
-## Blocchi risolti
-**Streamlit Cloud non aggiorna dopo push:**
-- Causa: nuovi file CSV richiedono ricostruzione ambiente
-- Soluzione: usare "Reboot" invece di "Rerun" dalle settings app
-- Tempo perso: ~15 minuti
-- Lesson learned: Reboot per nuovi file, Rerun per solo codice
+**Lezioni apprese:**
+- Pattern ripetibile: esplorazione → pulizia → aggregazione → implementazione → deploy
+- Decisioni design richiedono discussione iterativa (+30-45 min)
+- Git workflow e deploy ormai automatizzati (<10 min)
+
+## Milestone: MVP Dashboard Funzionante ✓
+✅ Dashboard online con 3 grafici interattivi
+✅ Dati ufficiali ISTAT 2014-2023
+✅ Normalizzazione popolazione corretta
+✅ Percezione vs realtà visualizzata
+✅ Focus reati mediatici vs trend generale
+✅ Metodologia trasparente documentata
+✅ Deploy automatico GitHub → Streamlit Cloud
+✅ Repository pubblico e riproducibile
+
+**Stato: PRODUCTION-READY per uso pubblico**
