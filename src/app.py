@@ -216,12 +216,12 @@ with col_left:
     
     categorie_list = df_categorie_norm['Categoria'].unique()
     colori = {
-        'Furti': '#2E86AB',
-        'Violenze contro la persona': '#E63946', 
-        'Truffe e Frodi': '#F77F00',
-        'Rapine': '#9B2226',
-        'Droga': '#8338EC',
-        'Altro': '#95A99C'
+        'Furti': '#1f77b4',                    # Blu standard
+        'Violenze contro la persona': '#d62728',  # Rosso vivo
+        'Truffe e Frodi': '#ff7f0e',          # Arancione
+        'Rapine': '#8B4513',                   # Marrone (non rosso!)
+        'Droga': '#9467bd',                    # Viola
+        'Altro': '#7f7f7f'                     # Grigio
     }
     
     for categoria in categorie_list:
@@ -291,12 +291,12 @@ with col_right:
     
     reati_list = df_allarme_norm['Reato'].unique()
     colori_allarme = {
-        'Omicidi volontari consumati': '#DC143C',
-        'Tentati omicidi': '#FF6347',
-        'Violenze sessuali': '#8B008B',
-        'Atti sessuali con minorenne': '#9932CC',
-        'Rapine in abitazione': '#FF8C00',
-        'Sequestri di persona': '#CD853F'
+        'Omicidi volontari consumati': '#d62728',      # Rosso vivo
+        'Tentati omicidi': '#ff7f0e',                  # Arancione
+        'Violenze sessuali': '#8B008B',                # Viola scuro (dominante)
+        'Atti sessuali con minorenne': '#e377c2',      # Rosa
+        'Rapine in abitazione': '#bcbd22',             # Giallo-verde
+        'Sequestri di persona': '#17becf'              # Cyan
     }
     
     for reato in reati_list:
