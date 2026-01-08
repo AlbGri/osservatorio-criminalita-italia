@@ -121,13 +121,13 @@ Giorno 4 (2026-01-08): ~6 ore
 - Git workflow e deploy ormai automatizzati (<10 min)
 
 ## Milestone: MVP Dashboard Funzionante ✓
-✅ Dashboard online con 3 grafici interattivi
-✅ Dati ufficiali ISTAT 2014-2023
-✅ Normalizzazione popolazione corretta
-✅ Percezione vs realtà visualizzata
-✅ Focus reati mediatici vs trend generale
-✅ Metodologia trasparente documentata
-✅ Deploy automatico GitHub → Streamlit Cloud
-✅ Repository pubblico e riproducibile
+- [x] Dashboard online con 3 grafici interattivi
+- [x] Dati ufficiali ISTAT 2014-2023
+- [x] Normalizzazione popolazione corretta
+- [x] Percezione vs realtà visualizzata
+- [x] Focus reati mediatici vs trend generale
+- [x] Metodologia trasparente documentata
+- [x] Deploy automatico GitHub → Streamlit Cloud
+- [x] Repository pubblico e riproducibile
 
 **Stato: PRODUCTION-READY per uso pubblico**
